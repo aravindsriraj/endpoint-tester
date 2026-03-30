@@ -36,23 +36,13 @@ See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for full design documentation.
 
 ## Setup
 
-### 1. Install dependencies
-
-```bash
-bun install
-```
-
-### 2. Configure environment
+### 1. Add your API keys to `.env`
 
 Create a `.env` file in the project root:
 
 ```bash
-# Composio
+# Composio — get from https://app.composio.dev
 COMPOSIO_API_KEY=your_composio_api_key
-
-# Filled in automatically by scaffold.sh (step 3)
-GMAIL_AUTH_CONFIG_ID=
-GOOGLECALENDAR_AUTH_CONFIG_ID=
 
 # LiteLLM gateway (recommended)
 LITELLM_API_KEY=sk-...
@@ -61,25 +51,21 @@ LITELLM_API_KEY=sk-...
 # ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-### 3. Create Composio auth configs
+### 2. Run setup
 
 ```bash
-sh scaffold.sh
+COMPOSIO_API_KEY=your_key sh setup.sh
 ```
 
-This creates managed OAuth auth configs for Gmail and Google Calendar and writes their IDs to `.env`.
-
-### 4. Connect your Google account
-
-```bash
-bun src/connect.ts
-```
-
-Open the printed OAuth URLs in your browser and sign in with your Google account. This registers the connected account under the user ID `candidate`, which the runner uses.
+`setup.sh` does everything in one shot:
+- Installs dependencies via `bun install`
+- Runs `scaffold.sh` to create managed OAuth auth configs for Gmail and Google Calendar and writes their IDs to `.env`
+- Runs `bun src/connect.ts` — prints OAuth URLs to connect your Google account; open them in your browser and sign in
+- Runs a sanity check to verify `proxyExecute()` works end-to-end
 
 > **Tip:** Use a throwaway Google account — the agent sends a test email to self and may trash messages or delete calendar events during validation.
 
-### 5. Verify
+### 3. Verify
 
 ```bash
 bun src/index.ts
@@ -137,6 +123,8 @@ src/
 ├── run.ts                    # runner and report validator (read-only)
 ├── connect.ts                # OAuth setup for the 'candidate' user
 └── index.ts                  # endpoint list display utility
+scaffold.sh                   # creates Composio auth configs, writes IDs to .env
+setup.sh                      # one-shot setup: install → scaffold → OAuth → sanity check
 ARCHITECTURE.md               # full architecture documentation
 ```
 
