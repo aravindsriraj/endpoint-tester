@@ -1,5 +1,19 @@
 # API Endpoint Executability Validator
 
+## The Problem
+
+Composio connects AI agents to 1,000+ external apps and 42,000+ API endpoints. Before an endpoint can be reliably used by an agent, you need to know: **does it actually work?**
+
+This is harder than it sounds. Endpoints can fail for many reasons:
+- The endpoint is **fake** — it appears in documentation but doesn't exist in the real API
+- The connected account **lacks the required OAuth scopes** to call it
+- The endpoint requires **path parameters** (like `{messageId}`) that must be fetched from another endpoint first
+- The request **body must be constructed correctly** from a schema, or the API rejects it
+
+Manually testing thousands of endpoints per app is not feasible. This project automates it.
+
+## What It Does
+
 An AI agent that validates whether API endpoints are actually executable. Given a list of endpoint definitions, it tests each one via Composio's proxy and classifies the result as `valid`, `invalid_endpoint`, `insufficient_scopes`, or `error`.
 
 ## Architecture
