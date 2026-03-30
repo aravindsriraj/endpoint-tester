@@ -1,0 +1,19 @@
+{
+  "name": "endpoint-tester-interview",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@composio/core": "latest",
+    "@langchain/anthropic": "^1.3.25",
+    "@langchain/core": "^1.1.36",
+    "@langchain/langgraph": "^1.2.5",
+    "langchain": "^1.2.37",
+    "langsmith": "^0.5.14",
+    "zod": "^3"
+  }
+}
